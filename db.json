@@ -1,28 +1,14 @@
 {
   "devs": [
     {
-      "id": "1",
-      "name": "Ana Souza",
-      "tech": ["React", "TypeScript", "Node.js"],
-      "description": "Desenvolvedora full stack apaixonada por criar aplicações web escaláveis.",
-      "avatarUrl": "https://example.com/avatars/ana.jpg",
-      "githubUrl": "https://github.com/anasouza"
-    },
-    {
-      "id": "2",
-      "name": "Carlos Lima",
-      "tech": ["Java", "Spring Boot", "AWS"],
-      "description": "Backend developer com foco em microsserviços e arquitetura em nuvem.",
-      "avatarUrl": "https://example.com/avatars/carlos.jpg",
-      "githubUrl": "https://github.com/carloslima"
-    },
-    {
-      "id": "3",
-      "name": "Julia Martins",
-      "tech": ["Python", "Django", "PostgreSQL"],
-      "description": "Especialista em APIs REST e banco de dados relacionais.",
-      "avatarUrl": "https://example.com/avatars/julia.jpg",
-      "githubUrl": "https://github.com/juliamartins"
+      "id": "164a",
+      "name": "Alan de Medeiros",
+      "tech": [
+        "teste01"
+      ],
+      "description": "teste02",
+      "githubUrl": "https://github.com/Alan-de-Medeiros",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/170477645?s=400&u=09a7985d1b51d77614334b320f13097f1f666e9a&v=4"
     }
   ]
 }
