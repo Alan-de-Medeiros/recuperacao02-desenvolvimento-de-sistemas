@@ -1,16 +1,8 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react";
 import styles from "./styles.module.css";
-
-type Dev = {
-  id: number;
-  name: string;
-  tech: string[];
-  description?: string;
-  githubUrl?: string;
-  avatarUrl?: string;
-};
+import type { Dev } from "../types/Dev";
 
 export default function DevList() {
   const [devs, setDevs] = useState<Dev[]>([]);
@@ -19,14 +11,17 @@ export default function DevList() {
     carregarDevs();
   }, []);
 
-  function carregarDevs() {
-    const local = localStorage.getItem("devs");
-    if (local) {
-      setDevs(JSON.parse(local));
+  async function carregarDevs() {
+    try {
+      const res = await fetch("http://localhost:3333/devs");
+      const data = await res.json();
+      setDevs(data);
+    } catch (err) {
+      console.error("Erro ao carregar devs:", err);
     }
   }
 
-  function adicionarDev(event: React.FormEvent<HTMLFormElement>) {
+  async function adicionarDev(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -43,8 +38,7 @@ export default function DevList() {
       return;
     }
 
-    const novoDev: Dev = {
-      id: Math.floor(Math.random() * 1000000),
+    const novoDev: Omit<Dev, "id"> = {
       name,
       tech: techText.split(",").map((t) => t.trim()).filter(Boolean),
       description,
@@ -52,18 +46,29 @@ export default function DevList() {
       avatarUrl: avatar,
     };
 
-    const novosDevs = [...devs, novoDev];
-    setDevs(novosDevs);
-    localStorage.setItem("devs", JSON.stringify(novosDevs));
-    form.reset();
+    try {
+      const res = await fetch("http://localhost:3333/devs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novoDev),
+      });
+
+      const data = await res.json();
+      setDevs([...devs, data]);
+      form.reset();
+    } catch (err) {
+      console.error("Erro ao adicionar dev:", err);
+    }
   }
 
-  function deletarDev(id: number) {
-    const filtrados = devs.filter((dev) => dev.id !== id);
-    setDevs(filtrados);
-    localStorage.setItem("devs", JSON.stringify(filtrados));
+  async function deletarDev(id: number | string) {
+    try {
+      await fetch(`http://localhost:3333/devs/${id}`, { method: "DELETE" });
+      setDevs(devs.filter((dev) => dev.id !== id));
+    } catch (err) {
+      console.error("Erro ao deletar dev:", err);
+    }
   }
-
 
   return (
     <div className={styles.container}>
@@ -97,7 +102,7 @@ export default function DevList() {
             )}
 
             <div className={styles.buttons}>
-              <button onClick={() => deletarDev(dev.id)}>Remover</button>
+            <button type="button" onClick={() => deletarDev(dev.id)}>Remover</button>
             </div>
           </li>
         ))}
