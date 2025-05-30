@@ -73,7 +73,7 @@ export default function DevList() {
         <input name="name" placeholder="Nome completo" required />
         <input name="tech" placeholder="Tecnologias" required />
         <textarea name="description" placeholder="Sobre você" />
-        <input name="github" placeholder="GitHub" />
+        <input name="github" placeholder="UserGitHub" />
         <input name="avatar" placeholder="Endereço da imagem" />
         <button type="submit">Adicionar Dev</button>
       </form>
